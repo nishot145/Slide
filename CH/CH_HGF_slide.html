@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脳の「予測」が作る幻覚 - Powers et al. (2017)</title>
+
+    <!-- Reveal.js CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/dracula.min.css" id="theme">
+
+    <!-- カスタムスタイル -->
+    <style>
+        .reveal {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+        }
+        .reveal .subtitle {
+            color: #8be9fd;
+            font-size: 0.6em;
+            margin-bottom: 20px;
+        }
+        .reveal .header-tag {
+            color: #8be9fd;
+            font-size: 0.45em;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: left;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            text-align: left;
+        }
+        .card {
+            background: #282a36;
+            border: 1px solid #6272a4;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 0.55em;
+            line-height: 1.6;
+        }
+        .card h4 {
+            color: #50fa7b;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+        .card.accent {
+            border-color: #ff79c6;
+        }
+        .card.accent h4 {
+            color: #ff79c6;
+        }
+        .quote-box {
+            background: #44475a;
+            border-left: 5px solid #8be9fd;
+            padding: 15px 20px;
+            font-size: 0.65em;
+            text-align: left;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .highlight {
+            color: #ffb86c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Title Slide -->
+            <section id="title-slide">
+                <div class="header-tag">Powers et al. (2017) Science 論文解説</div>
+                <h1 style="font-size: 1.8em;">脳の「予測」が作る幻覚</h1>
+                <div class="subtitle">計算論モデル（HGF）で解き明かす幻聴の発生メカニズム</div>
+                <p style="font-size: 0.45em; color: #6272a4;">CH Task & Hierarchical Gaussian Filter</p>
+            </section>
+
+            <!-- Slide 2: Task -->
+            <section id="task">
+                <div class="header-tag">POWERS ET AL. (2017) SCIENCE</div>
+                <h3 style="text-align: left; font-size: 1.1em;">条件づけ幻覚タスク（CH Task）の仕組み</h3>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>1. 刺激提示フェーズ</h4>
+                        <ul>
+                            <li>視覚刺激（チェッカーボード）を1秒間提示[cite: 1]</li>
+                            <li>同時に微弱な純音（1kHz）を提示/不提示[cite: 1]</li>
+                            <li>「音が聞こえたか（Yes/No）」を回答[cite: 1]</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>2. 条件づけ操作</h4>
+                        <ul>
+                            <li>タスク前半は画像と75%閾値の音を高頻度で対提示[cite: 1, 2]</li>
+                            <li>「画像が出たら音が鳴る」という関連性（Prior）を無意識に学習させる[cite: 1, 2]</li>
+                        </ul>
+                    </div>
+                    <div class="card accent">
+                        <h4>3. 条件づけ幻覚</h4>
+                        <ul>
+                            <li>タスク後半に向けて音なし（No-Tone）試行を増加[cite: 1, 2]</li>
+                            <li>音がないのに「聞こえた」と回答した現象を<span class="highlight">【条件づけ幻覚】</span>と定義[cite: 1, 2]</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Bayesian Inference -->
+            <section id="bayesian">
+                <div class="header-tag">POWERS ET AL. (2017) SCIENCE</div>
+                <h3 style="text-align: left; font-size: 1.1em;">脳の意思決定ルール：「ベイズ推論」</h3>
+                <div class="quote-box">
+                    <strong>事前信念（Prior: 予測・期待）＋ 感覚入力（Sensory Input: 実際の音）＝ 最終的な知覚（Perception）</strong>[cite: 1, 2]<br>
+                    <small style="color: #f1fa8c;">※ 脳は外の世界の情報をそのまま受容するのではなく、過去の経験に基づく「予測」と合体させて世界を解釈している。</small>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>日常の例え：暗い部屋の服</h4>
+                        <ul>
+                            <li>「泥棒がいるかも」という強い予測（Prior）</li>
+                            <li>目から入る「ハンガーにかかった服」の曖昧な感覚入力</li>
+                            <li>両者が合体し、「人が立っている！」と誤認する。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>条件づけ幻覚への応用</h4>
+                        <ul>
+                            <li>「画像が出たから音が鳴る」という強固な予測[cite: 1, 2]</li>
+                            <li>「無音」というあやふやな音覚入力[cite: 1, 2]</li>
+                            <li>予測が勝り、「音が存在する」と誤った知覚が成立。[cite: 1, 2]</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: HGF Model -->
+            <section id="hgf-model">
+                <div class="header-tag">POWERS ET AL. (2017) SCIENCE</div>
+                <h3 style="text-align: left; font-size: 1.1em;">HGF（階層ガウスフィルタ）の3階層構造</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div class="card" style="font-size: 0.5em;">
+                        <h4 style="margin-bottom: 4px;">第3層 (X₃): 環境の変動性 (Volatility)[cite: 1]</h4>
+                        <div>意味: 「この実験のルールはどれくらい変わりやすいか？」[cite: 1] | <strong>関連脳部位:</strong> 小脳虫部[cite: 1]</div>
+                    </div>
+                    <div class="card" style="font-size: 0.5em;">
+                        <h4 style="margin-bottom: 4px;">第2層 (X₂): 連合強度・ルール (Contingency)[cite: 1]</h4>
+                        <div>意味: 「画像が出たら音が出る確率は何％くらいか？」[cite: 1] | <strong>関連脳部位:</strong> 海馬 / 海馬傍回・小脳[cite: 1]</div>
+                    </div>
+                    <div class="card" style="font-size: 0.5em;">
+                        <h4 style="margin-bottom: 4px;">第1層 (X₁): 知覚的信念 (Perceptual Belief)[cite: 1]</h4>
+                        <div>意味: 「今、まさに音が聞こえたか？ (1 or 0)」[cite: 1] | <strong>関連脳部位:</strong> 上側頭溝 (STS) / 前部インスラ (AIC)[cite: 1]</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Nu Parameter -->
+            <section id="parameter-nu">
+                <div class="header-tag">POWERS ET AL. (2017) SCIENCE</div>
+                <h3 style="text-align: left; font-size: 1.1em;">幻覚を引き起こすカギ：事前信念への過度な重み付け (ν)</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>健常な脳のバランス (ν が標準)[cite: 1]</h4>
+                        <ul>
+                            <li>事前予測と現実の音入力を対等に比較[cite: 1]</li>
+                            <li>音が存在しない試行では「無音」の感覚信号を正しく採用[cite: 1]</li>
+                            <li>「聞こえなかった（正棄却）」と正解を導く[cite: 1]</li>
+                        </ul>
+                    </div>
+                    <div class="card accent">
+                        <h4>幻覚が生じる脳 (ν > 1 : Strong Prior)[cite: 1, 2]</h4>
+                        <ul>
+                            <li>事前予測への信頼度パラメータ ν (Nu) が過剰に高値[cite: 1]</li>
+                            <li>「音が出るはず」という予測が実際の「無音」信号を圧倒[cite: 1, 2]</li>
+                            <li>外界信号がないにもかかわらず「聞こえた」と誤認[cite: 1, 2]</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Results -->
+            <section id="results">
+                <div class="header-tag">POWERS ET AL. (2017) SCIENCE</div>
+                <h3 style="text-align: left; font-size: 1.1em;">研究結果：Powers et al. (2017) の主要発見</h3>
+                <div class="grid-2">
+                    <div class="card accent">
+                        <h4>発見1: 幻覚体験者に共通する計算傾向[cite: 2]</h4>
+                        <ul>
+                            <li>精神病の有無に関わらず、日常的に幻聴を体験するグループ（P+H+, P-H+）はパラメータ ν が有意に高値[cite: 1, 2]</li>
+                            <li>「診断名」ではなく「幻聴体験の有無」が Prior への過度な重み付けと直接連動[cite: 2]</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>発見2: 階層的信念更新の脳内マッピング[cite: 1]</h4>
+                        <ul>
+                            <li>HGFモデルの信念軌跡がfMRIの脳活動と連動[cite: 1]</li>
+                            <li><strong>X₁:</strong> 上側頭溝 (STS), 前部インスラ (AIC)[cite: 1]</li>
+                            <li><strong>X₂:</strong> 海馬 / 海馬傍回、小脳[cite: 1]</li>
+                            <li><strong>X₃:</strong> 小脳虫部[cite: 1]</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Summary -->
+            <section id="summary">
+                <div class="header-tag">POWERS ET AL. (2017) SCIENCE</div>
+                <h3 style="text-align: left; font-size: 1.1em;">まとめ：計算論的精神医学がもたらす革新</h3>
+                <div class="card accent" style="font-size: 0.6em; line-height: 1.8;">
+                    <ul>
+                        <li><strong>1. 幻覚の再定義:</strong> 幻覚は脳の機能低下ではなく、事前予測（Prior）と感覚入力の統合における重み付け（ν）の偏りによって生じる計算エラー[cite: 2]。</li>
+                        <li><strong>2. 共通モデルの確立:</strong> HGF（階層ガウスフィルタ）を用いることで、精神病患者と健常幻覚者に共通する『Strong Prior』の病態メカニズムを定量的・数学的に証明[cite: 1, 2]。</li>
+                        <li><strong>3. 臨床への応用可能性:</strong> 患者の主観的な「幻覚体験」を客観的な数値パラメータ（ν）および脳画像バイオマーカーに還元できる可能性を示した[cite: 1, 2]。</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js JS (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            transition: 'slide'
+        });
+    </script>
+</body>
+</html>
